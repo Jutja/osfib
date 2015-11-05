@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <title>osfib</title>
+        <style type="text/css">
+        .panel  {
+        border-color: #bde3f7 !important;
+        background-color: #fff;
+        position: absolute;
+        width: auto;
+        height: 95%;
+        margin: 0px;
+        border-radius: 0;
+        }
+        #main-container{
+        margin: 6px;
+        background-color: #eee;
+        height: 98vh;
+        }
+        #main-row{
+        height: 100%
+        }
+        .full_height_tab {
+        width:100%;
+        height:100vh;
+        }
+        .list-group-item.node-tree {
+        padding: 0px 15px;
+        }
+        .head-tabs.nav>li>a {
+        padding: 3px 3px !important;
+        }
+        ul {
+        list-style-type: none;
+        }
+        .open-icon {
+        margin-top: 5px;
+        margin-bottom: 10px;
+        font-size: 35px;
+        border: 6px solid #574C4C;
+        padding: 20px;
+        }
+        </style>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="/components/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/components/toastr/toastr.min.css">
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="/components/bootstrap/dist/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="/components/bootstrap-treeview/dist/bootstrap-treeview.min.css">
+    </head>
+    <body background="gray">
+        <nav class="navbar navbar-default navbar-fixed-bottom navbar-inverse">
+            <div class="container-fluid" >
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Editor<span class="caret"></span></a>
+                            <ul class="dropdown-menu" id="taskbar_editors">
+                                
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Terminal<span class="caret"></span></a>
+                            <ul class="dropdown-menu" id="taskbar_terms">
+                                
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Browser<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Coming Soon</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#">Server Info</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Option <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Sleep Timer</a></li>
+                                <li><a href="#">Share Access</a></li>
+                                <li><a href="#">Something else here</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    </div><!-- /.navbar-collapse -->
+                    </div><!-- /.container-fluid -->
+                </nav>
+                <div class="container-fluid"  id="main-container">
+                    <div class="row" id="main-row"><div class="col-sm-2 panel">
+                        <ul class="nav nav-tabs head-tabs">
+                            <li role="presentation"><div class="btn">Create New File</div></li>
+                            <li role="presentation"><div class="btn">Create New Folder</div></li>
+                        </ul>
+                        <div id="tree" class="treeview"></div>
+                    </div>
+                    <div class="col-sm-5 panel"> <ul class="nav nav-tabs head-tabs">
+                        <ul class="nav nav-tabs head-tabs" id="win1-parent">
+                            <li role="presentation" class="active" ><a onclick="togglemodal('open_new_modal')" aria-controls="window1" >+</a></li>
+                        </ul>
+                        <div class="tab-content" id ="win1-childs">
+                            <div role="tabpanel" class="tab-pane" id="editor"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-7 col-md-5 panel">
+                        <ul class="nav nav-tabs head-tabs" id="win2-parent">
+                            <li role="presentation" class="active" ><a onclick="togglemodal('open_new_modal')" aria-controls="window2" >+</a></li>
+                        </ul>
+                        <div class="tab-content" id ="win2-childs">
+                            <div role="tabpanel" class="tab-pane" id="term"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="input_modal" tabindex="-1" role="dialog" class="modal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header"><a data-dismiss="modal" class="close">x</a>
+                    </div>
+                    <div class="modal-body">
+                        <center>
+                        <p id="input_modal_text">Enter File Name</p>
+                        <form id="input_modal_form">
+                            <input id="input_modal_input" type="text" name="input" placeholder="">
+                            <input id="input_modal_submit" type="submit" value="Submit" class="btn btn-primary">
+                        </form>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="resume_modal" tabindex="-1" role="dialog" class="modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header"><a data-dismiss="modal" class="close">x</a>
+                </div>
+                <div class="modal-body">
+                    <center>
+                    <p id="input_modal_text">You have <span id"modal_tnum">few</span> terminals running on the server</p>
+                    <input  value="Resume" class="btn btn-primary" onclick="termManage(true)">
+                    <input  value="Start Afresh" class="btn btn-primary" onclick="termManage(false)">
+                </form>
+                </center>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="open_new_modal" tabindex="-1" role="dialog" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header"><a data-dismiss="modal" class="close">x</a>
+        </div>
+        <div class="modal-body">
+            <center>
+            <div class="media">
+                <div class="media-left">
+                    <a href="">
+                        <ul>
+                            <li> <span class="glyphicon glyphicon-console open-icon" aria-hidden="true"></span>
+                            </li><li><span class="glyphicon-class">Open a console</span></li></ul>
+                        </a>                  </div>
+                        <div class="media-left">
+                            <a href="">
+                                <ul>
+                                    <li><span class="glyphicon  glyphicon-edit open-icon" aria-hidden="true"></span>
+                                    </li><li><span class="glyphicon-class">Open a new File</span> </li></ul>
+                                </a>                        </div>
+                                <div class="media-left">
+                                    <a href="">
+                                        <ul>
+                                            <li><span class="glyphicon  glyphicon-open open-icon" aria-hidden="true"></span>
+                                        </span>
+                                        </li><li> <span class="glyphicon-class">Open a new browser</span> </li></a>
+                                    </ul>
+                                </div>
+                                <div class="media-left">
+                                    <a href="">
+                                        <ul>
+                                            <li><span class="glyphicon glyphicon-folder-close open-icon" aria-hidden="true"></span>
+                                        </span>
+                                        </li><li> <span class="glyphicon-class">Open a new browser</span> </li></a>
+                                    </ul>
+                                </div> 
+                            </ul>
+                        </form>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </body>
+        <!-- Latest compiled and minified jquery -->
+        <script src="/components/jquery/dist/jquery.min.js"></script>
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="/components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/components/bootstrap/js/tab.js"></script>
+        <script src="/components/jshashes/hashes.min.js"></script>
+        <script src="/components/ace-builds/src-min/ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="/components/ace-builds/src-min/ext-modelist.js" type="text/javascript" charset="utf-8"></script>
+        <script src="/components/toastr/toastr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="/js/term.js"></script>
+        <script src="/js/primus.js"></script>
+        <script src="/js/terminal.js"></script>
+    </html>

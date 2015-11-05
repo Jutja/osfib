@@ -1,0 +1,25 @@
+{
+  "name": "osfib",
+  "version": "0.0.1",
+  "homepage": "https://github.com/jutja/osfib",
+  "authors": [
+    "bhanuc <bhanuc@iitk.ac.in>"
+  ],
+  "description": "web app",
+  "main": "app.js",
+  "license": "MIT",
+  "directory": "/public/vendor",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-treeview": "~1.2.0",
+    "jshashes": "~1.0.5",
+    "ace-builds": "https://github.com/ajaxorg/ace-builds.git#~1.2.0",
+    "toastr": "~2.1.2"
+  }
+}
